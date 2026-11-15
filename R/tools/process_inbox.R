@@ -41,7 +41,7 @@ csv_path <- if (length(args) >= 2L) args[2L] else "dataraw/electricity_generatio
 extdata  <- dirname(csv_path)
 
 this_file <- sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE))
-tools_dir <- if (length(this_file)) dirname(this_file[1L]) else "R/tools/"
+tools_dir <- if (length(this_file)) dirname(this_file[1L]) else "R/tools"
 source(file.path(tools_dir, "extract_electricity_data.R"))
 
 CSV_COLS <- c("date", "total_energy_gwh", "peak_demand_mw",

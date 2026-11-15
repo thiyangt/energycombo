@@ -303,7 +303,7 @@ extract_electricity_folder <- function(folder = pdf_folder, output = output_csv)
   }
 
   # One row per date, from the date's own PDF (the "day before" columns go only
-  # into the energy-and-peak data, see tools/process_inbox.R); prefer a row
+  # into the energy-and-peak data, see process_inbox.R next to this file); prefer a row
   # without problems
   out <- all_rows[!is.na(all_rows$date) & !all_rows$is_previous, ]
   out <- out[order(out$date, !is.na(out$note)), ]

@@ -74,7 +74,7 @@ GitHub Actions  (process-inbox.yml, never contacts CBSL)
   -> commits -> empties the inbox
 ```
 
-### The daily 12:30 run
+### The daily 12:00 run
 
 Besides the runs the fetcher starts, `process-inbox.yml` also runs once a day
 on a timer (`cron: "30 6 * * *"`, 13:00 UTC = 18:30 Sri Lanka). GitHub often
@@ -128,6 +128,21 @@ CBSL sometimes adds an ending after the date in a file name
 (`daily_economic_indicators_20260907_e_0.pdf`, `_e_1`, `_e1`, `._e`). The
 fetcher and the R scripts accept any ending between the date and `.pdf`.
 
+The pipeline is not part of the R package. `.Rbuildignore` keeps it out of the
+package build:
+
+```
+^R/tools$
+^google-apps-scripts$
+^\.github$
+^PIPELINE\.md$
+```
+
+R also only installs the files directly in `R/`, so the scripts in `R/tools/`
+never run when someone installs the package. `process_inbox.R` loads
+`extract_electricity_data.R` from its own folder, so the two must stay
+together.
+
 ## Setting up the pipeline
 
 This repository is already set up. These steps are for a new repository or a
@@ -136,7 +151,7 @@ new Google account.
 ### 1. Files in the repo
 
 The repo needs the CSV, `.github/workflows/process-inbox.yml`, the two R
-scripts in `tools/` and, for reference, `google-apps-scripts/fetcher.gs`. The
+scripts in `R/tools/` and, for reference, `google-apps-scripts/fetcher.gs`. The
 meta file and `problems.csv` are created by the workflow.
 
 ### 2. Test the workflow (2 min)
@@ -264,7 +279,7 @@ Put a few CBSL PDFs in a folder, with the names CBSL gives them (e.g.
 that does not exist yet:
 
 ```
-Rscript tools/process_inbox.R test-pdfs test-out/electricity.csv
+Rscript R/tools/process_inbox.R test-pdfs test-out/electricity.csv
 ```
 
 It needs the `pdftools` R package. It creates `test-out/electricity.csv` with
@@ -330,7 +345,7 @@ website.
 
 ```
 git pull
-Rscript tools/process_inbox.R ../cbsl_pdfs dataraw/electricity_generation_data.csv
+Rscript R/tools/process_inbox.R ../cbsl_pdfs dataraw/electricity_generation_data.csv
 git diff --numstat dataraw/*.csv
 ```
 
