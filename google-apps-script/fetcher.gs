@@ -17,7 +17,7 @@
  * CONFIG.FAILS_BEFORE_ALERT failed runs in a row, or for problems on the
  * GitHub side (token).
  *
- * Setup is in the repo's PIPELINE.md. In short:
+ * Setup is in the repo's docs/PIPELINE.md. In short:
  *   - fill in CONFIG below,
  *   - Project Settings -> Script properties -> add GITHUB_TOKEN,
  *   - run "fetchNewPdfs" once to check it works,

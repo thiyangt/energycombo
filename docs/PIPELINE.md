@@ -135,7 +135,7 @@ package build:
 ^R/tools$
 ^google-apps-scripts$
 ^\.github$
-^PIPELINE\.md$
+^docs/PIPELINE\.md$
 ```
 
 R also only installs the files directly in `R/`, so the scripts in `R/tools/`
